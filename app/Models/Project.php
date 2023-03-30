@@ -19,11 +19,28 @@ class Project extends Model
         // 'technologies'
     ];
 
-    public function type() {
+    protected $appends = [
+        'full_image_path'
+    ];
+
+    public function getFullImagePathAttribute()
+    {
+        $fullPath = null;
+
+        if ($this->image) {
+            $fullPath = asset('storage/' . $this->image);
+        }
+
+        return $fullPath;
+    }
+
+    public function type()
+    {
         return $this->belongsTo(Type::class);
     }
 
-    public function technologies() {
+    public function technologies()
+    {
         return $this->belongsToMany(Technology::class);
     }
 }
